@@ -73,4 +73,69 @@ const reasonToJoin = [
   },
 ];
 
-export { languages, moviesCollection, reasonToJoin };
+const countries = [
+  {
+    id: 1,
+    title: "India",
+    value: "IND"
+  },
+  {
+    id: 2,
+    value: "USA",
+    title: "United State America"
+  },
+  {
+    id: 3,
+    title: "Canada",
+    value: "CND"
+  },
+  {
+    id: 4,
+    title: "Australia",
+    Value: "AUS"
+  }
+];
+
+
+const genderConstants = [
+  {
+    id: 1,
+    title: "Male",
+    value: "male"
+  },
+  {
+    id: 2,
+    title: "Female",
+    value: "male"
+  },
+  {
+    id: 3,
+    title: "Other",
+    value: "male"
+  }
+];
+
+const hobbies = [
+  {
+    id: 1,
+    title: "Coding",
+    value: "coding"
+  },
+  {
+    id: 2,
+    title: "Gaming",
+    value: "gaming"
+  },
+  {
+    id: 2,
+    title: "Reading",
+    value: "reading"
+  },
+  {
+    id: 2,
+    title: "Travelling",
+    value: "travelling"
+  }
+];
+
+export { languages, moviesCollection, reasonToJoin, countries, genderConstants, hobbies };

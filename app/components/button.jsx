@@ -4,7 +4,7 @@ const Button = ({ btnTxt = "Submit", className = "", icon = "" }) => {
       <div
         className={`flex justify-between items-center border-white border-solid text-white rounded-md px-4 py-1 bg-red-500 text-[18px] ${className}`}
       >
-        <button className="cursor-pointer">{btnTxt}</button>
+        <button className="cursor-pointer" type="submit">{btnTxt}</button>
         {icon && icon}
       </div>
     </>

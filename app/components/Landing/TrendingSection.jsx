@@ -18,7 +18,6 @@ const TrendingSection = () => {
       <div className="flex justify-start items-center flex-wrap gap-y-3">
         {moviesCollection.map((item, _) => (
           <div className="w-[200px] overflow-hidden rounded-md mx-2" key={_}>
-            {console.log("item---->", `/${item.path}`)}
             <Image
               src={`/${item.path}`}
               alt=""
