@@ -7,7 +7,7 @@ import { countries, genderConstants, hobbies } from '../utils/constants/index';
 import Button from "../components/button";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSubmitForm } from '../hooks/submitForm'
+import { useSubmitForm } from '../hooks/submitForm';
 
 const formPage = () => {
   const { currentDate, formik, setCurrentDate } = useSubmitForm();
@@ -21,21 +21,23 @@ const formPage = () => {
             </h3>
           </div>
 
-          <div className="w-full h-full border border-solid border-black mt-5 rounded-2xl my-5">
+          <form className="w-full h-full border border-solid border-black mt-5 rounded-2xl my-5" onSubmit={formik.handleSubmit}>
             <div className="w-full flex justify-around">
-              <Input label="FirstName" placeholder="Enter Your First Name" {...formik} />
-              <Input label="LastName" placeholder="Enter Your Last Name" {...formik} />
+              <Input label="FirstName" placeholder="Enter Your First Name" {...formik} name={"firstName"} value={formik.values.firstName} />
+              <Input label="LastName" placeholder="Enter Your Last Name" {...formik} name={"lastName"} value={formik.values.lastName} />
             </div>
             <div className="w-full flex justify-around">
-              <Input label="Email" placeholder="Enter Your email" {...formik} />
-              <Input label="Age" placeholder="Enter your age" {...formik} />
+              <Input label="Email" placeholder="Enter Your email" {...formik} name={"email"} value={formik.values.email} />
+              <Input label="Age" placeholder="Enter your age" {...formik} name={"age"} value={formik.values.age} />
             </div>
             <div className="w-full flex justify-around">
-              <Input label="Password" placeholder="Enter your password" {...formik} />
+              <Input label="Password" placeholder="Enter your password" {...formik} name={"password"} value={formik.values.password} />
               <Input
                 label="College Name"
                 placeholder="Enter your college name"
                 {...formik}
+                name={"collegeName"}
+                value={formik.values.collegeName}
               />
             </div>
 
@@ -49,13 +51,13 @@ const formPage = () => {
             <div className="px-10 mt-3 ">
               <p className=" font-bold my-2">Select Your Gender</p>
               <div className="flex justify-between w-full">
-                {genderConstants.map((item) => {
-                  return <>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                      <input type="radio" name={"select_gender"} value={item.value} class="accent-blue-600 w-6 h-6" />
+                {genderConstants.map((item, index) => {
+                  return <div key={index}>
+                    <label className="flex items-center gap-2 cursor-pointer" key={index}>
+                      <input type="radio" name={"select_gender"} value={item.value} className="accent-blue-600 w-6 h-6" />
                       <span>{item.title}</span>
                     </label>
-                  </>
+                  </div>
                 })}
               </div>
             </div>
@@ -70,8 +72,8 @@ const formPage = () => {
             <div className="w-full px-10 mt-5">
               <p className="font-semibold">Hobbies</p>
               <div className="w-full flex justify-between mt-2">
-                {hobbies.map((item) => {
-                  return <div>
+                {hobbies.map((item, index) => {
+                  return <div key={index}>
                     <input type="checkbox" id={item.id} className="w-5 h-5 appearance-non" />
                     <label htmlFor="" id={item.id} className="inline-block ml-2 " value={item.value}>{item.title}</label>
                   </div>
@@ -95,7 +97,7 @@ const formPage = () => {
             </div>
 
             <div className="w-full flex justify-around px-10 mt-2">
-              < TextArea />
+              < TextArea formik={formik} name={"aboutYourSelf"} />
             </div>
 
             <div className="w-full grid grid-cols-3 items-center px-10 mb-3 justify-between">
@@ -108,7 +110,14 @@ const formPage = () => {
                 <Link btnTxt="Go To Home" path="/home" className=" bg-[#f0d89e] rounded-md border border-black" />
               </div>
             </div>
-          </div>
+
+            {/* See Registered user List */}
+            <div className="px-10 justify-end">
+              <div className="flex justify-end">
+                <Link btnTxt="See All Registered Users" path="/user" className=" bg-[#f36f47] rounded-md border border-black" />
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </>

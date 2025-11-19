@@ -138,4 +138,11 @@ const hobbies = [
   }
 ];
 
-export { languages, moviesCollection, reasonToJoin, countries, genderConstants, hobbies };
+
+const TOAST_TYPE_CONSTANT = {
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+  WARNING: "WANRNING",
+}
+
+export { languages, moviesCollection, reasonToJoin, countries, genderConstants, hobbies, TOAST_TYPE_CONSTANT };

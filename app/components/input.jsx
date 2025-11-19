@@ -4,9 +4,12 @@ const Input = ({
   placeholder = "",
   label = "",
   isRequired = true,
+  value,
+  name,
   ...rest
 }) => {
   const [search, setSearch] = useState();
+  const { handleChange, handleBlur, values, errors, touched } = rest;
   return (
     <>
       <div className={`h-auto w-[500px] rounded-md ${className}`}>
@@ -21,11 +24,15 @@ const Input = ({
           </div>
         )}
         <input
-          {...rest}
+          value={values[name]}
           type="text"
           className="w-full h-10 focus:outline-solid focus:outline-3 focus:outline-white rounded-md border border-black p-2"
           placeholder={placeholder}
+          name={name}
+          onChange={handleChange}
+          onBlur={handleBlur}
         />
+        {touched[name] && errors[name] && <p className="text-red-500">{errors[name]}</p>}
       </div>
     </>
   );

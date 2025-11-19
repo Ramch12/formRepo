@@ -1,7 +1,6 @@
 import React from "react";
 
 const Select = ({ options = [], className = "" }) => {
-  console.log("className--->", className);
   return (
     <>
       <select
@@ -9,10 +8,9 @@ const Select = ({ options = [], className = "" }) => {
         id="lang"
         className={`border border-solid px-4 py-2 rounded-md focus:outline-white focus:outline-2 ${className}`}
       >
-        {options.map((opt) => {
-          {console.log("Options====>", opt)}
+        {options.map((opt, index) => {
           return (
-            <option value={opt.value} className="text-black hover:text-white">
+            <option value={opt.value} className="text-black hover:text-white" key={index}>
               {opt.title}
             </option>
           );
