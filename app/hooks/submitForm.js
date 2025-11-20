@@ -9,7 +9,7 @@ import { alertComponent } from '../utils/libs/alertComponent';
 import { api } from '../api/index'
 
 export const useSubmitForm = () => {
-    const [currentDate, setCurrentDate] = useState();
+    const [currentDate, setCurrentDate] = useState(new Date());
 
     const formSchema = Yup.object({
         firstName: Yup.string().required("First name is required"),
@@ -18,13 +18,13 @@ export const useSubmitForm = () => {
         age: Yup.string().required("age is required"),
         password: Yup.string().required("password is required"),
         collegeName: Yup.string().required("collegeName is required"),
-        // country: Yup.string().required("First name is required"),
-        // gender: Yup.string().required("First name is required"),
-        // termsAndCondition: Yup.string().required("First name is required"),
-        // hobbies: Yup.string().required("First name is required"),
-        // dateOfBirth: Yup.string().datetime().required("First name is required"),
-        // file: Yup.string().required("Please upload a file"),
+        country: Yup.string().required("Please select your country"),
+        gender: Yup.string().oneOf(["MALE", "FEMALE", "OTHER"]).required("Please select your gender"),
+        termsAndCondition: Yup.boolean(),
+        hobbies: Yup.array().of(Yup.string()).min(1, "Please select at least one hobby"),
+        dateOfBirth: Yup.date().nullable().required("Please choose you date of birth"),
         aboutYourSelf: Yup.string().required("Please fill about yourself.")
+        // file: Yup.string().required("Please upload a file"),
     });
 
     const initialValues = {
@@ -34,22 +34,25 @@ export const useSubmitForm = () => {
         age: "",
         password: "",
         collegeName: "",
-        // country: "",
-        // gender: "",
-        // termsAndCondition: "",
-        // hobbies: "",
-        // dateOfBirth: "",
+        country: "",
+        gender: "",
+        termsAndCondition: false,
+        hobbies: [],
+        dateOfBirth: "",
         // file: "",
         aboutYourSelf: ""
     }
 
-    const onFormSubmit = async (values) => {
+    const onFormSubmit = async (values, actions) => {
         const { data } = await api.post("/api/v1/users", values);
         if (data) {
-            return alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "Your form is submitted successfully");
+            alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "Your form is submitted successfully");
+            actions.resetForm();
+            return
         }
         alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "Some issue occure during form submission!");
     };
+
 
     const formik = useFormik({
         initialValues,
@@ -57,6 +60,8 @@ export const useSubmitForm = () => {
         onSubmit: onFormSubmit
     });
 
+    console.log("Errors", formik.errors);
+    console.log("hobbie value", formik.values.hobbies);
 
     return {
         formik,

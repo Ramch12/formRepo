@@ -12,7 +12,7 @@ const textArea = ({ formik, name }) => {
           rows={10}
           cols={10}
           style={{ width: "100%" }}
-          className="border border-black rounded-md"
+          className="border border-black rounded-md p-2 font-semibold"
           value={formik.values[name]}
           onChange={handleChange}
         ></textarea>

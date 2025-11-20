@@ -19,7 +19,7 @@ export default function Header() {
           </div>
           <div className="flex justify-between items-center min-w-52 relative z-50">
             <div>
-              <Select options={languages} className={`border border-black w-full  bg-amber-600`} />
+              <Select options={languages} className={`border border-black w-full  bg-amber-600`} placeHolder="Select Language" />
             </div>
             <div>
               <Button btnTxt="Sign In" />

@@ -1,13 +1,12 @@
 const Button = ({ btnTxt = "Submit", className = "", icon = "" }) => {
   return (
-    <>
-      <div
-        className={`flex justify-between items-center border-white border-solid text-white rounded-md px-4 py-1 bg-red-500 text-[18px] ${className}`}
-      >
-        <button className="cursor-pointer" type="submit">{btnTxt}</button>
-        {icon && icon}
-      </div>
-    </>
+    <button
+      type="submit"
+      className={`flex items-center justify-center gap-2 border border-white text-white rounded-md bg-red-500 text-[18px] px-4 py-2 ${className}`}
+    >
+      {btnTxt}
+      {icon && icon}
+    </button>
   );
 };
 

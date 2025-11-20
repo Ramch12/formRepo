@@ -101,17 +101,17 @@ const genderConstants = [
   {
     id: 1,
     title: "Male",
-    value: "male"
+    value: "MALE"
   },
   {
     id: 2,
     title: "Female",
-    value: "male"
+    value: "FEMALE"
   },
   {
     id: 3,
     title: "Other",
-    value: "male"
+    value: "OTHER"
   }
 ];
 

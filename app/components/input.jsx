@@ -3,18 +3,18 @@ const Input = ({
   className = "",
   placeholder = "",
   label = "",
-  isRequired = true,
+  isRequired = false,
   value,
   name,
   ...rest
 }) => {
   const [search, setSearch] = useState();
-  const { handleChange, handleBlur, values = {}, errors, touched ={} } = rest;
+  const { handleChange, handleBlur, values = {}, errors, touched = {} } = rest;
   return (
     <>
       <div className={`h-auto w-[500px] rounded-md ${className}`}>
         {isRequired && (
-          <div className="my-2">
+          <div>
             {label && (
               <label htmlFor="" className="font-semibold">
                 {label}
@@ -26,7 +26,7 @@ const Input = ({
         <input
           value={values[name]}
           type="text"
-          className="w-full h-10 focus:outline-solid focus:outline-3 focus:outline-white rounded-md border border-black p-2"
+          className="w-full h-10 focus:outline-solid focus:outline-3 focus:outline-white rounded-md border border-white p-2"
           placeholder={placeholder}
           name={name}
           onChange={handleChange}

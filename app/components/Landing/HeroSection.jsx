@@ -27,12 +27,12 @@ const HeroSection = () => {
         <p className="mt-5">
           Ready to watch? Enter your email to create or restart your membership.
         </p>
-        <div className="flex justify-between w-[560px] mt-3">
-          <Input className={"ml-2 h-12 w-[400px]"} placeholder="Enter your email"/>
+        <div className="flex justify-between items-center w-[750px] mt-3">
+          <Input className={"ml-2 h-12 w-[400px]"} placeholder="Enter your email" />
           <Button
             btnTxt="Get Started"
             icon={<PiGreaterThan />}
-            className="w-40 ml-2"
+            className="h-12 w-[180px] font-bold"  // Now works!
           />
         </div>
       </div>

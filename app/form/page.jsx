@@ -11,6 +11,7 @@ import { useSubmitForm } from '../hooks/submitForm';
 
 const formPage = () => {
   const { currentDate, formik, setCurrentDate } = useSubmitForm();
+  const { handleChange, errors, touched } = formik;
   return (
     <>
       <div className=" bg-[#d7f0ef] w-full h-auto border border-solid border-black flex justify-center">
@@ -21,30 +22,32 @@ const formPage = () => {
             </h3>
           </div>
 
-          <form className="w-full h-full border border-solid border-black mt-5 rounded-2xl my-5" onSubmit={formik.handleSubmit}>
+          <form className="w-full h-full border border-solid border-black mt-5 rounded-2xl my-5 pb-2" onSubmit={formik.handleSubmit}>
             <div className="w-full flex justify-around">
-              <Input label="FirstName" placeholder="Enter Your First Name" {...formik} name={"firstName"} value={formik.values.firstName} />
-              <Input label="LastName" placeholder="Enter Your Last Name" {...formik} name={"lastName"} value={formik.values.lastName} />
+              <Input isRequired label="FirstName" placeholder="Enter Your First Name" {...formik} name={"firstName"} value={formik.values.firstName} className={"mt-2"} />
+              <Input isRequired label="LastName" placeholder="Enter Your Last Name" {...formik} name={"lastName"} value={formik.values.lastName} className={"mt-2"} />
             </div>
             <div className="w-full flex justify-around">
-              <Input label="Email" placeholder="Enter Your email" {...formik} name={"email"} value={formik.values.email} />
-              <Input label="Age" placeholder="Enter your age" {...formik} name={"age"} value={formik.values.age} />
+              <Input isRequired label="Email" placeholder="Enter Your email" {...formik} name={"email"} value={formik.values.email} className={"mt-2"} />
+              <Input isRequired label="Age" placeholder="Enter your age" {...formik} name={"age"} value={formik.values.age} className={"mt-2"} />
             </div>
             <div className="w-full flex justify-around">
-              <Input label="Password" placeholder="Enter your password" {...formik} name={"password"} value={formik.values.password} />
+              <Input isRequired label="Password" placeholder="Enter your password" {...formik} name={"password"} value={formik.values.password} className={"mt-2"} />
               <Input
                 label="College Name"
                 placeholder="Enter your college name"
                 {...formik}
                 name={"collegeName"}
                 value={formik.values.collegeName}
+                className={"mt-2"}
+                isRequired
               />
             </div>
 
             {/* Countries Dropdown */}
 
             <div className="w-full px-10 mt-5">
-              <Select options={countries} className={`border border-black w-full text-black`} />
+              <Select options={countries} className={`border border-black w-full text-black`} formik={formik} name={"country"} placeHolder="Please select your country" />
             </div>
 
             {/* Gender Radio Button */}
@@ -54,36 +57,51 @@ const formPage = () => {
                 {genderConstants.map((item, index) => {
                   return <div key={index}>
                     <label className="flex items-center gap-2 cursor-pointer" key={index}>
-                      <input type="radio" name={"select_gender"} value={item.value} className="accent-blue-600 w-6 h-6" />
+                      <input type="radio" name={"gender"} value={item.value} checked={formik.values["gender"] === item.value} className="accent-blue-600 w-6 h-6" onChange={handleChange} />
                       <span>{item.title}</span>
                     </label>
                   </div>
                 })}
               </div>
+              {touched["gender"] && errors["gender"] && (<p className="text-red-400">{errors["gender"]}</p>)}
             </div>
 
             {/*Checkbox for terms and condition*/}
 
             <div className="w-1/2 px-10 flex items-center mt-3 justify-start">
-              <input type="checkbox" id="terms_condition" className="w-5 h-5 appearance-non" />
-              <label htmlFor="" id="terms_condition" className="inline-block ml-2 font-semibold">Agree Terms and Condition</label>
+              <input type="checkbox" id="terms_condition" className="w-5 h-5" name={"termsAndCondition"} checked={formik.values['termsAndCondition']} onChange={formik.handleChange} />
+              <label htmlFor="terms_condition" className="inline-block ml-2 font-semibold">Agree Terms and Condition</label>
             </div>
+
+            {/* checkBox for hobbies */}
 
             <div className="w-full px-10 mt-5">
               <p className="font-semibold">Hobbies</p>
               <div className="w-full flex justify-between mt-2">
                 {hobbies.map((item, index) => {
                   return <div key={index}>
-                    <input type="checkbox" id={item.id} className="w-5 h-5 appearance-non" />
+                    <input type="checkbox" id={item.id} value={item.value} name="hobbies" className="w-5 h-5" onChange={(e) => {
+                      if (e.target.checked) {
+                        formik.setFieldValue("hobbies", [...formik.values.hobbies, e.target.value])
+                      } else {
+                        formik.setFieldValue("hobbies", (formik.values.hobbies || []).filter(item => item != e.target.value))
+                      }
+                    }} />
                     <label htmlFor="" id={item.id} className="inline-block ml-2 " value={item.value}>{item.title}</label>
                   </div>
                 })}
               </div>
+              {formik.touched.hobbies && formik.errors.hobbies && (
+                <p className="text-red-500 text-sm mt-1">{formik.errors.hobbies}</p>
+              )}
             </div>
             <div className="w-full px-10 mt-2">
               <label className="font-semibold">Select your DOB</label>
               <br />
-              <DatePicker className="bg-white" placeholderText="Select your date of birth" />
+              <DatePicker className="bg-white" selected={formik.values.dateOfBirth} placeholderText="Select your date of birth" onChange={(date) => { formik.setFieldValue("dateOfBirth", date) }} />
+              {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
+                <p className="text-red-500 text-sm mt-1">{formik.errors.dateOfBirth}</p>
+              )}
             </div>
 
             {/* Upload file here */}

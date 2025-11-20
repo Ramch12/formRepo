@@ -4,10 +4,12 @@ import { api } from '@/app/api';
 import { Table } from '../index';
 import { alertComponent } from '../../../utils/libs/alertComponent';
 import { TOAST_TYPE_CONSTANT } from '../../../utils/constants';
-import { CSSProperties } from "react";
-import { ClipLoader } from "react-spinners";
+import { DotLoader } from "react-spinners";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
-const userTabel = () => {
+
+const userTabel = ({ search }) => {
     const [userList, setUserList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -49,43 +51,61 @@ const userTabel = () => {
                     <span className="text-black text-center block">{getValue()}</span>
                 )
             },
+            {
+                accessorKey: "country", header: "Coutry", cell: ({ getValue }) => (
+                    <span className="text-black text-center block">{getValue()}</span>
+                )
+            },
+            {
+                accessorKey: "gender", header: "Gender", cell: ({ getValue }) => (
+                    <span className="text-black text-center block">{getValue()}</span>
+                )
+            },
+            {
+                accessorKey: "termsAndCondition", header: "Accepted Terms and condition", cell: ({ getValue }) => (
+                    <span>{getValue() ? <AiOutlineCheckCircle size={30} style={{ margin: "0px auto" }} color='green' /> : <AiOutlineCloseCircle size={30} style={{ margin: "0px auto", color: "red" }} />}</span>
+                )
+            },
+            {
+                accessorKey: "hobbies", header: "Hobbies", cell: ({ getValue }) => (
+                    (<div className='flex flex-col gap-y-2'>
+                        {(getValue() || []).map((item, index) => {
+                            return <p key={index} className='border border-solid border-black rounded-md bg-[#ecbc62] p-1 font-semibold'>{item}</p>
+                        })}
+                    </div>)
 
-
-
-
-
-
-            // {
-            //     accessorKey: "status",
-            //     header: "Status",
-            //     cell: ({ getValue }) => (
-            //         <span className="text-green-500">{getValue()}</span>
-            //     ),
-            // }
+                )
+            },
+            {
+                accessorKey: "dateOfBirth", header: "Date Of Birth", cell: ({ getValue }) => (
+                    <span className="text-black text-center block">{new Date(getValue()).toDateString()}</span>
+                )
+            }
         ]
     }, []);
 
     const data = useMemo(() => userList, [userList]);
 
     useEffect(() => {
-        api.get("/api/v1/users").then(({ data }) => {
-            setUserList(data)
+        api.get(`/api/v1/users?email=${search}`).then(({ data }) => {
+            console.log("data====>", data);
+            setUserList(data);
         }).catch(error => {
-            alertComponent(TOAST_TYPE_CONSTANT.ERROR, error.response.message)
+            setUserList([]);
+            alertComponent(TOAST_TYPE_CONSTANT.ERROR, "No Users found")
         }).finally(() => {
             setLoading(false)
         })
-    }, []);
-    console.log("loading===>", loading)
+    }, [search]);
 
     return <>{
-        loading ? (<ClipLoader
+        loading ? (<div className='w-full flex justify-center items-center h-[300px]'><DotLoader
             loading={loading}
             cssOverride={override}
-            size={150}
+            size={50}
             aria-label="Loading Spinner"
             data-testid="loader"
-        />) : < Table columns={columns} data={data} />
+        /></div>) : < Table columns={columns} data={data} />
     }</>
 }
 
