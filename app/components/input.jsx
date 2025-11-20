@@ -9,7 +9,7 @@ const Input = ({
   ...rest
 }) => {
   const [search, setSearch] = useState();
-  const { handleChange, handleBlur, values, errors, touched } = rest;
+  const { handleChange, handleBlur, values = {}, errors, touched ={} } = rest;
   return (
     <>
       <div className={`h-auto w-[500px] rounded-md ${className}`}>
