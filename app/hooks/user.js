@@ -13,26 +13,6 @@ export const useUserAction = () => {
     const [loading, setLoading] = useState(true)
     const { openModal, closeModal } = useModal();
 
-    const updateUserSchema = Yup.object({
-        firstName: Yup.string().required("firstName is required!"),
-        lastName: Yup.string().required("lastName is required!"),
-        email: Yup.string().required("email is required!"),
-        age: Yup.string().required("age is required!"),
-        password: Yup.string().required("password is required!"),
-        collegeName: Yup.string().required("collegeName is required!")
-    });
-
-    const formik = useFormik({
-        validationSchema: updateUserSchema,
-        initialValues: { firstName: "", lastName: "", email: "", age: "", collegeName: "" },
-        onSubmit,
-        enableReinitialize: true,
-    });
-
-    function onSubmit(Values) {
-        console.log("Values", Values)
-    }
-
     const deleteUser = async (userId) => {
         await api.delete(`/api/v1/users/${userId}`);
         alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "You have successfully deleted the user!", userId);
@@ -43,10 +23,26 @@ export const useUserAction = () => {
         handleAction({ userId, onDelete: deleteUser, onEdit: () => { } })
     };
 
-    const handleEditeUser = async (userId) => {
-        console.log("clickked", userId)
-        openModal(<EditUserForm formik={formik} userId={userId} />);
+    const onEditUser = async (values, userId) => {
+        await api.put(`/api/v1/users/${userId}`, values);
+        closeModal();
+        setReloadTrigger(pre => pre + 1)
     }
+    console.log("Loading in hook", loading)
+    const handleEditeUser = async (userId) => {
+        try {
+            setLoading(true)
+            const response = await api.get(`/api/v1/users/${userId}`);
+            if (response.data) {
+                openModal(<EditUserForm userData={response.data} onEditUser={onEditUser} userId={userId} loading={loading} />);
+            }
+        } catch (error) {
+            console.error("Failed to fetch user data", error);
+            alertComponent(TOAST_TYPE_CONSTANT.ERROR, "Failed to load user data for editing.");
+        } finally {
+            setLoading(false)
+        }
+    };
     return {
         handleDeleteUser,
         handleEditeUser,

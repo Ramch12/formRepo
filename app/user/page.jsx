@@ -46,10 +46,6 @@ const userList = () => {
                             <Link btnTxt="create New User" path="/form" className=" bg-[#f36f47] rounded-md border border-black" />
                         </div>
                     </div>
-                    <div className='flex justify-end my-2'>
-                        <button className='p-2 bg-amber-100 rounded-xl border border-black font-semibold cursor-pointer' onClick={() => openModal(<UserModal />)
-                        }>Open Modal</button>
-                    </div>
                 </div>
             </div>
         </div>
