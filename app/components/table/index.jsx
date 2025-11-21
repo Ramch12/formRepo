@@ -5,10 +5,11 @@ export const Table = ({ data, columns }) => {
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        columnResizeMode: "onChange"
     });
 
     return (
-        <table className="min-w-full border">
+        <table className="min-w-full border table-fixed">
             <thead>
                 {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>

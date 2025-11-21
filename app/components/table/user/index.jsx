@@ -7,9 +7,12 @@ import { TOAST_TYPE_CONSTANT } from '../../../utils/constants';
 import { DotLoader } from "react-spinners";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaEdit } from "react-icons/fa";
 
 
-const userTabel = ({ search }) => {
+
+const userTabel = ({ search, onDelete = () => { }, onEdit = () => { }, reloadTrigger }) => {
     const [userList, setUserList] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -80,15 +83,35 @@ const userTabel = ({ search }) => {
                 accessorKey: "dateOfBirth", header: "Date Of Birth", cell: ({ getValue }) => (
                     <span className="text-black text-center block">{new Date(getValue()).toDateString()}</span>
                 )
+            },
+            {
+                accessorKey: "id",
+                header: "Action",
+                size: 180,       // width in px
+                minSize: 150,
+                maxSize: 200,
+                cell: ({ getValue }) => (
+                    <div className="flex justify-between w-full">
+                        <button onClick={() => { onEdit(getValue()) }} className="cursor-pointer p-2 border border-black rounded-md">
+                            <span >
+                                <FaEdit size={30} color="green" />
+                            </span>
+                        </button>
+                        <button onClick={() => { onDelete(getValue()) }} className="cursor-pointer p-2 border border-black rounded-md ml-2">
+                            <span >
+                                <RiDeleteBin5Line size={30} color="red" />
+                            </span>
+                        </button>
+                    </div>
+                ),
             }
-        ]
+        ];
     }, []);
 
     const data = useMemo(() => userList, [userList]);
 
     useEffect(() => {
-        api.get(`/api/v1/users?email=${search}`).then(({ data }) => {
-            console.log("data====>", data);
+        api.get(`/api/v1/users?firstName=${search}`).then(({ data }) => {
             setUserList(data);
         }).catch(error => {
             setUserList([]);
@@ -96,7 +119,7 @@ const userTabel = ({ search }) => {
         }).finally(() => {
             setLoading(false)
         })
-    }, [search]);
+    }, [search, reloadTrigger]);
 
     return <>{
         loading ? (<div className='w-full flex justify-center items-center h-[300px]'><DotLoader

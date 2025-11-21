@@ -6,13 +6,17 @@ const Input = ({
   isRequired = false,
   value,
   name,
+  inputClassName,
   ...rest
 }) => {
+  console.log("inputClassName", inputClassName)
   const [search, setSearch] = useState();
   const { handleChange, handleBlur, values = {}, errors, touched = {} } = rest;
+  console.log("Errors", errors);
+  console.log("formik Values===>", values);
   return (
     <>
-      <div className={`h-auto w-[500px] rounded-md ${className}`}>
+      <div className={`w-full h-auto rounded-md ${className}`}>
         {isRequired && (
           <div>
             {label && (
@@ -26,7 +30,7 @@ const Input = ({
         <input
           value={values[name]}
           type="text"
-          className="w-full h-10 focus:outline-solid focus:outline-3 focus:outline-white rounded-md border border-white p-2"
+          className={`w-full full h-10 focus:outline-solid focus:outline-4 focus:outline-[#a7f1c6] rounded-md p-2 ${inputClassName}`}
           placeholder={placeholder}
           name={name}
           onChange={handleChange}

@@ -5,11 +5,13 @@ import Link from '../components/link';
 import { useDebouncedCallback } from 'use-debounce';
 import { useModal } from "@/app/context/modalContext";
 import UserModal from '../modal/userModal';
+import { useUserAction } from '../hooks/user'
 
 
 const userList = () => {
     const [search, setSearch] = useState("");
     const { openModal, closeModal } = useModal();
+    const { handleDeleteUser, handleEditeUser, reloadTrigger } = useUserAction()
 
     const debounced = useDebouncedCallback(
         (value) => {
@@ -25,7 +27,7 @@ const userList = () => {
 
     return <>
         <div className="w-full h-auto bg-[#eeb0af]">
-            <div className="px-10 py-3">
+            <div className="px-10">
                 <div className="w-full h-20 border border-solid border-black rounded-2xl text-2xl font-bold flex justify-center items-center">
                     <p className="text-center text-2xl">Registered User List</p>
                 </div>
@@ -35,17 +37,19 @@ const userList = () => {
                         <input type="text" id="search_user" className=' w-[400] rounded-md p-2 text-xl focus:outline-4 focus:outline-[#ebbebe] border border-solid border-black' placeholder='Search for User' onChange={(e) => { handleChange(e) }} />
                     </div>
                 </div>
-                <div className="w-full h-screen border-black mt-4">
-                    < UserTabel search={search} />
+                <div className="w-full border-black mt-4">
+                    < UserTabel search={search} onDelete={handleDeleteUser} onEdit={handleEditeUser} reloadTrigger={reloadTrigger} />
                 </div>
-                <div>
-                    <div className="flex justify-end">
-                        <Link btnTxt="create New User" path="/form" className=" bg-[#f36f47] rounded-md border border-black" />
+                <div className='mt-2'>
+                    <div>
+                        <div className="flex justify-end">
+                            <Link btnTxt="create New User" path="/form" className=" bg-[#f36f47] rounded-md border border-black" />
+                        </div>
                     </div>
-                </div>
-                <div className='flex justify-end my-2'>
-                    <button className='p-2 bg-amber-100 rounded-xl border border-black font-semibold cursor-pointer' onClick={() => openModal(<UserModal />)
-                    }>Open Modal</button>
+                    <div className='flex justify-end my-2'>
+                        <button className='p-2 bg-amber-100 rounded-xl border border-black font-semibold cursor-pointer' onClick={() => openModal(<UserModal />)
+                        }>Open Modal</button>
+                    </div>
                 </div>
             </div>
         </div>

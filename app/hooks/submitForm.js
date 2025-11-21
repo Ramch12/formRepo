@@ -6,10 +6,12 @@ import { hobbies } from "../utils/constants";
 import { useFormik } from "formik";
 import { TOAST_TYPE_CONSTANT } from '../utils/constants/index';
 import { alertComponent } from '../utils/libs/alertComponent';
-import { api } from '../api/index'
+import { api } from '../api/index';
+import { useRouter } from 'next/navigation';
 
 export const useSubmitForm = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
+    const router = useRouter();
 
     const formSchema = Yup.object({
         firstName: Yup.string().required("First name is required"),
@@ -48,20 +50,17 @@ export const useSubmitForm = () => {
         if (data) {
             alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "Your form is submitted successfully");
             actions.resetForm();
+            router.push("/user");
             return
         }
         alertComponent(TOAST_TYPE_CONSTANT.SUCCESS, "Some issue occure during form submission!");
     };
-
 
     const formik = useFormik({
         initialValues,
         validationSchema: formSchema,
         onSubmit: onFormSubmit
     });
-
-    console.log("Errors", formik.errors);
-    console.log("hobbie value", formik.values.hobbies);
 
     return {
         formik,
