@@ -23,30 +23,31 @@ const formPage = () => {
           </div>
 
           <form className="w-full h-full border border-solid border-black mt-5 rounded-2xl my-5 pb-2" onSubmit={formik.handleSubmit}>
-            <div className="w-full flex justify-around">
-              <Input isRequired label="FirstName" placeholder="Enter Your First Name" {...formik} name={"firstName"} value={formik.values.firstName} className={"mt-2"} />
-              <Input isRequired label="LastName" placeholder="Enter Your Last Name" {...formik} name={"lastName"} value={formik.values.lastName} className={"mt-2"} />
+            <div className="w-full grid grid-cols-2 gap-4 px-4 mt-4">
+              <Input isRequired label="FirstName" placeholder="Enter Your First Name" formik={formik} name={"firstName"} value={formik.values.firstName} className={"mt-2"} inputClassName={"border border-black w-full"} />
+              <Input isRequired label="LastName" placeholder="Enter Your Last Name" formik={formik} name={"lastName"} value={formik.values.lastName} className={"mt-2"} inputClassName={"border border-black w-full"} />
             </div>
-            <div className="w-full flex justify-around">
-              <Input isRequired label="Email" placeholder="Enter Your email" {...formik} name={"email"} value={formik.values.email} className={"mt-2"} />
-              <Input isRequired label="Age" placeholder="Enter your age" {...formik} name={"age"} value={formik.values.age} className={"mt-2"} />
+            <div className="w-full grid grid-cols-2 gap-4 px-4 mt-4">
+              <Input isRequired label="Email" placeholder="Enter Your email" formik={formik} name={"email"} value={formik.values.email} className={"mt-2"} inputClassName={"border border-black w-full"} />
+              <Input isRequired label="Age" placeholder="Enter your age" formik={formik} name={"age"} value={formik.values.age} className={"mt-2"} inputClassName={"border border-black w-full"} />
             </div>
-            <div className="w-full flex justify-around">
-              <Input isRequired label="Password" placeholder="Enter your password" {...formik} name={"password"} value={formik.values.password} className={"mt-2"} />
+            <div className="w-full grid grid-cols-2 gap-4 px-4 mt-4">
+              <Input isRequired label="Password" placeholder="Enter your password" formik={formik} name={"password"} value={formik.values.password} className={"mt-2"} inputClassName={"border border-black w-full"} />
               <Input
                 label="College Name"
                 placeholder="Enter your college name"
-                {...formik}
+                formik={formik}
                 name={"collegeName"}
                 value={formik.values.collegeName}
                 className={"mt-2"}
                 isRequired
+                inputClassName={"border border-black w-full"}
               />
             </div>
 
             {/* Countries Dropdown */}
 
-            <div className="w-full px-10 mt-5">
+            <div className="w-full px-4 mt-5">
               <Select options={countries} className={`border border-black w-full text-black`} formik={formik} name={"country"} placeHolder="Please select your country" />
             </div>
 

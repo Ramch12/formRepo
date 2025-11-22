@@ -6,11 +6,10 @@ const Input = ({
   isRequired = false,
   name,
   inputClassName,
-  formik,
+  formik = {},
   ...rest
 }) => {
-  const { handleChange, handleBlur, values, errors, touched } = formik;
-  console.log("Value===>", values)
+  const { handleChange = () => { }, handleBlur = () => { }, values, errors, touched } = formik;
   return (
     <>
       <div className={`w-full h-auto rounded-md ${className}`}>

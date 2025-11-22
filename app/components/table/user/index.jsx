@@ -85,6 +85,11 @@ const userTabel = ({ search, onDelete = () => { }, onEdit = () => { }, reloadTri
                 )
             },
             {
+                accessorKey: "collegeName", header: "Name of College", cell: ({ getValue }) => (
+                    <span className="text-black text-center block">{getValue()}</span>
+                )
+            },
+            {
                 accessorKey: "id",
                 header: "Action",
                 size: 180,       // width in px

@@ -5,12 +5,10 @@ import { TOAST_TYPE_CONSTANT } from '../utils/constants';
 import { handleAction } from '../utils/libs/alertComponent';
 import { useModal } from '../context/modalContext';
 import EditUserForm from '../components/forms/userEditForm';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
 export const useUserAction = () => {
     const [reloadTrigger, setReloadTrigger] = useState(0);
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const { openModal, closeModal } = useModal();
 
     const deleteUser = async (userId) => {
@@ -28,7 +26,7 @@ export const useUserAction = () => {
         closeModal();
         setReloadTrigger(pre => pre + 1)
     }
-    console.log("Loading in hook", loading)
+   
     const handleEditeUser = async (userId) => {
         try {
             setLoading(true)
